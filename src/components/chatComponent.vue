@@ -58,8 +58,8 @@ export default {
     return {
       messages: [],
       message: "",
-      id:'',
-      userId: Math.floor(Math.random() * 10),
+      id:'',// người nhận
+      userId: Math.floor(Math.random() * 10), //session
     };
   },
   methods: {
