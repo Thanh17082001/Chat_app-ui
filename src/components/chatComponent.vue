@@ -90,8 +90,25 @@ export default {
     this.scrollToBottom();
     this.socket = io("http://localhost:4000", {
       transports: ["websocket", "polling", "flashsocket"],
-      auth: { userId: this.userId },
+      auth: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjRkNWVhNzhjYzQwMmFkMzE0ZGM3OGYiLCJmdWxsTmFtZSI6Ik5ndXnhu4VuIFRoacOqbiBUaGFuaCIsImVtYWlsIjoidGhhbmhkZXYwODIwMDFAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkTDNVT3lOa1RXck5kTXJYdjhpcXhZTzl1azVTVzNudHBjdGFaazhLYk5taU4wTjl0V1VHbEsiLCJyb2xlcyI6W3siX2lkIjoiNjY0ZDc5OTkxYzcyYTlkYjJlZmIzZjY4IiwibmFtZSI6InRlc3QiLCJkZXNjcmlwdGlvbiI6InRlc3QiLCJfX3YiOjB9XSwiZnJpZW5kcyI6W10sImNyZWF0ZWRBdCI6IjIwMjQtMDUtMjJUMDI6NTU6MzUuMTQ5WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDUtMjJUMDc6Mjc6NTkuNjQ1WiIsIl9fdiI6MCwiaWF0IjoxNzE2MzcwNTY0LCJleHAiOjE3MTYzNzQxNjR9.YLSF48hR7Ov4jOS-KQEMolO7fURM6sx_IZhnmM81iyg' },
     });
+
+        this.socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+   this.socket.on('connect_error', (err) => {
+  console.error('Connection error:', err.message);
+  alert(err.message)
+  // Xử lý lỗi kết nối, ví dụ: hiển thị thông báo lỗi cho người dùng
+});
+
+this.socket.on('exception', (error) => {
+  console.error('Server error:', error);
+  alert(error.message)
+
+  // Xử lý lỗi từ server, ví dụ: hiển thị thông báo lỗi cho người dùng
+});
     
     this.socket.on("joined", (room) => {
       console.log(`Joined room: ${room}`);
