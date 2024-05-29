@@ -1,16 +1,26 @@
 import axios from "axios";
 
-const createApiClient = (baseURL, headers) =>{
+const createApiClient = (tagUrl, token, headers) => {
+    const url = `http://localhost:3005/api/${tagUrl}`;
+    
+    const commonHeaders = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+    };
+
+    if (token) {
+        commonHeaders.Authorization = `Bearer ${token}`;
+    }
+
     const commonConfig = {
         withCredentials: true,
-        headers: headers ? headers : {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
+        headers: headers ? { ...commonHeaders, ...headers } : commonHeaders,
     };
+
     return axios.create({
-        baseURL,
+        baseURL: url,
         ...commonConfig,
     });
 }
-export default createApiClient
+
+export default createApiClient;
